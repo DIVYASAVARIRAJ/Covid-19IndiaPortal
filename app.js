@@ -129,14 +129,14 @@ app.get(
   authenticateToken,
   async (request, response) => {
     const { districtId } = request.params;
-    const getDistrictsQuery = `
+    const getDistrictQuery = `
         SELECT 
           * 
         FROM 
          district
         WHERE 
             district_id = ${districtId};`;
-    const district = await database.get(getDistrictsQuery);
+    const district = await database.get(getDistrictQuery);
     response.send(convertDistrictDbObjectToResponseObject(district));
   }
 );
@@ -185,8 +185,8 @@ app.put(
     UPDATE
         district
     SET
-        districtName = '${districtName}', 
-        stateId = ${stateId},
+        district_name = '${districtName}', 
+        state_id = ${stateId},
          cases = ${cases}, 
          cured = ${cured}, 
          active = ${active}, 
@@ -195,7 +195,7 @@ app.put(
         district_id = ${districtId});
     `;
 
-    await database.run(updateDistrictsQuery);
+    await database.run(updateDistrictQuery);
     response.send("District Details Updated");
   }
 );
